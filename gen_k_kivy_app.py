@@ -1561,13 +1561,7 @@ class GenKApp(App):
         )
         self.scroll_top_btn.bind(on_release=self._scroll_map_top)
 
-        self.quiz_view = QuickQuizView(app_ref=self)
-        self.library_view = LibraryView(app_ref=self)
-        self.profile_view = ProfileView(app_ref=self)
-
-        self.content_area.add_widget(self.map_scroll)
-        self.content_area.add_widget(self.scroll_top_btn)
-
+        # El HUD debe existir antes que las vistas que lo leen (ProfileView)
         self.hud = TopHudBar(
             on_premium_click=self.open_premium_modal,
             pos_hint={"top": 0.99, "x": 0}
@@ -1576,6 +1570,13 @@ class GenKApp(App):
         self.hud.streak = self.streak_count
         self.hud.daily_goals = self.daily_goals_count
         self.root_layout.add_widget(self.hud)
+
+        self.quiz_view = QuickQuizView(app_ref=self)
+        self.library_view = LibraryView(app_ref=self)
+        self.profile_view = ProfileView(app_ref=self)
+
+        self.content_area.add_widget(self.map_scroll)
+        self.content_area.add_widget(self.scroll_top_btn)
 
         self.nav_bar = BottomNavBar(
             on_tab_change=self.switch_tab,
